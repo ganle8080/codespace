@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>在线音乐播放器</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="player-container">
+        <h1>在线音乐播放器</h1>
+        
+        <div class="now-playing">
+            <h2 id="current-song">{{if .Songs}}{{index .Songs 0}} {{else}}无歌曲{{end}}</h2>
+            <div class="controls">
+                <button id="prev-btn">上一首</button>
+                <button id="play-btn">播放</button>
+                <button id="next-btn">下一首</button>
+            </div>
+            
+            <div class="mode-selector">
+                <span>播放模式:</span>
+                <select id="mode-select">
+                    <option value="sequence" {{if eq .Player.Mode "sequence"}}selected{{end}}>顺序播放</option>
+                    <option value="random" {{if eq .Player.Mode "random"}}selected{{end}}>随机播放</option>
+                    <option value="repeat" {{if eq .Player.mode "repeat"}}selected{{end}}>单曲循环</option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="playlist">
+            <h3>播放列表</h3>
+            <ul id="song-list">
+                {{range .Songs}}
+                <li data-path="{{.Path}}">
+                    <span class="song-title">{{.Title}}</span>
+                    <span class="song-artist">- {{.Artist}}</span>
+                </li>
+                {{end}}
+            </ul>
+        </div>
+    </div>
+
+    <audio id="audio-player"></audio>
+
+    <script src="/static/js/player.js"></script>
+</body>
+</html>
